@@ -156,3 +156,32 @@ if(player == map.getPlayer()){
 }
 me.move(player);
 ```
+
+## embix: asserts robot is near wall, following it clockwise
+```javascript
+            var directions = ["up", "right", "down", "left"];
+            var nexDirClock = function(dir){
+            	var newIndex = 1+directions.indexOf(dir);
+                return directions[newIndex%directions.length];
+            }
+            var nexDirCounter = function(dir){
+            	var newIndex = 3+directions.indexOf(dir);
+                return directions[newIndex%directions.length];
+            }
+                        
+            if(me.newDirection===undefined)me.newDirection="up";
+            if(me.lastDirection===undefined)me.lastDirection="up";
+                              
+            me.lastDirection = nexDirCounter(me.lastDirection);            
+            while(!me.canMove(me.lastDirection)){
+                me.lastDirection=nexDirClock(me.lastDirection);                
+            }
+            
+            
+            // getAdjacentEmptyCells gives array of ((x, y), direction) pairs
+            //var moves = map.getAdjacentEmptyCells(me.getX(), me.getY());
+            //var index = 0;//map.getRandomInt(0, moves.length - 1);
+            //me.lastDirection = moves[index][1]
+            
+            me.move(me.lastDirection);
+```
