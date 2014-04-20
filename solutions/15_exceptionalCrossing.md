@@ -30,6 +30,13 @@
         }
 ```
 
+## embix
+```javascript
+        'onCollision': function (player) {
+            player.killedBy(alert(map.placePlayer(0,20)));
+        }
+```
+
 # Redefinition approach
 
 ## chenxiaoqino
