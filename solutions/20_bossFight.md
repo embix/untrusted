@@ -93,3 +93,57 @@ map.getPlayer().setPhoneCallback(function(){
  }
 });
 ```
+
+## embix: as redefining his bullets didn't work, I ended up building a launcher
+
+```javascript
+    // copied from drone code
+    function moveToward(obj, type) {
+        var target = obj.findNearest(type);
+        var leftDist = obj.getX() - target.x;
+        var upDist = obj.getY() - target.y;
+        
+        var direction;
+        if (upDist == 0 && leftDist == 0) {
+        	return;
+        } if (upDist > 0 && upDist >= leftDist) {
+            direction = 'up';
+        } else if (upDist < 0 && upDist < leftDist) {
+            direction = 'down';
+        } else if (leftDist > 0 && leftDist >= upDist) {
+            direction = 'left';
+        } else {
+            direction = 'right';
+        }
+        
+        if (obj.canMove(direction)) {
+            obj.move(direction);
+        }
+    }
+	
+	map.defineObject('mybullet', {
+        'type': 'dynamic',
+        'symbol': '*',
+        'color': 'yellow',
+        'interval': 100,
+        'projectile': true,
+        'behavior': function (me) {
+			moveToward(me, 'boss');
+        }
+    });
+    
+	//jQueryObject
+    //$('.bullet').removeClass('bullet').addClass('mybullet');
+    // redefining seems more complicated after all :-(
+    //var dyns = map.getDynamicObjects();
+    
+    // new dyn objects have to be created after the check
+    map.defineObject('launcher', {
+        'symbol': 'L',
+        'onCollision': function(dyn){
+        	map.placeObject(1,5,'mybullet');
+        }      
+    });
+    
+    map.placeObject(0, map.getHeight() - 1, 'launcher');
+```
