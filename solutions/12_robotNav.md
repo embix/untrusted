@@ -23,3 +23,30 @@
         }
     });
 ```
+
+## embix
+
+```javascript
+            if(me.kaunta===undefined)me.kaunta=0;
+            me.kaunta++;
+            if(me.kaunta<5){
+                me.move('down');
+                return;
+            }
+            if(me.kaunta<25){
+                me.move('right');
+                return;
+            }
+            if(me.kaunta<35){
+                me.move('up');
+                return;
+            }
+            if(me.canMove('right')){
+                me.move('right');
+                return;
+            }
+            if(me.canMove('down')){
+                me.move('down');
+                return;
+            }
+```
